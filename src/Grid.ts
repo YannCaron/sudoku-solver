@@ -24,7 +24,7 @@ export default class Grid {
         return this._grid[r][c] === 0
     }
 
-    public colFilled(c: number): Set<number> {
+    public colFixedCandidates(c: number): Set<number> {
         const set = new Set<number>()
 
         for (let r = 0; r < 9; r++) {
@@ -35,7 +35,7 @@ export default class Grid {
         return set
     }
 
-    public rowFilled(r: number): Set<number> {
+    public rowFixedCandidates(r: number): Set<number> {
         const set = new Set<number>()
 
         for (let c = 0; c < 9; c++) {
@@ -46,7 +46,7 @@ export default class Grid {
         return set
     }
 
-    public blockFilled(c: number, r: number): Set<number> {
+    public blockFixedCandidates(c: number, r: number): Set<number> {
         const set = new Set<number>()
 
         const cellC = Math.ceil(c / 9) * 3
@@ -63,11 +63,11 @@ export default class Grid {
         return set
     }
 
-    public cellFilled(c: number, r: number): Set<number> {
+    public cellFixedCandidates(c: number, r: number): Set<number> {
         return new Set<number>([
-            ...this.colFilled(c),
-            ...this.rowFilled(r),
-            ...this.blockFilled(c, r)
+            ...this.colFixedCandidates(c),
+            ...this.rowFixedCandidates(r),
+            ...this.blockFixedCandidates(c, r)
         ])
     }
 
@@ -75,7 +75,7 @@ export default class Grid {
         if (!this.isCellEmpty(c, r))
             return new Set<number>()
 
-        const filled = this.cellFilled(c, r)
+        const filled = this.cellFixedCandidates(c, r)
         return new Set<number>(Grid.UNITY.filter(e => !filled.has(e)))
     }
 

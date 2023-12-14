@@ -1,3 +1,5 @@
+import Constants from "./Constants"
+
 export default class GridIterator {
 
     private _x: number
@@ -11,15 +13,15 @@ export default class GridIterator {
     }
 
     get hasCovered():boolean {
-        return this._visitedCounted == 81
+        return this._visitedCounted == Constants.GRID_WIDTH * Constants.GRID_HEIGHT
     }
 
     next() {
         this._x ++
-        if (this._x == 9) {
+        if (this._x == Constants.GRID_WIDTH) {
             this._x = 0
             this._y++
-            if (this._y == 9)
+            if (this._y == Constants.GRID_HEIGHT)
                 this._y = 0
         }
 

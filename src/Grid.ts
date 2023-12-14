@@ -79,37 +79,16 @@ export default class Grid {
         return new Set<number>(Grid.UNITY.filter(e => !filled.has(e)))
     }
 
-    public cellRemains(): boolean {
+    public isSolved(): boolean {
         for (let r = 0; r < 9; r++) {
             for (let c = 0; c < 9; c++) {
                 if (!this.isCellEmpty(c, r))
-                    return true
+                    return false
             }
         }
 
-        return false
+        return true
     }
-
-    public getNextLowestCandidateCell(): { c: number, r: number, count: number } {
-        let lowestCandidate = { c: 0, r: 0, count: 9 }
-
-        for (let r = 0; r < 9; r++) {
-            for (let c = 0; c < 9; c++) {
-                const cellCandidates = this.candidates(c, r)
-                console.log(cellCandidates, cellCandidates.size);
-
-                if (cellCandidates.size > 0 && cellCandidates.size < lowestCandidate.count) {
-                    lowestCandidate = { c: c, r: r, count: cellCandidates.size }
-                }
-                //if (lowestCandidate.count === 1)
-                //    return lowestCandidate
-            }
-        }
-
-        return lowestCandidate
-    }
-
-    //public getNextCellToEvaluate() {}
 
     public clone() {
         return new Grid([...this._grid])

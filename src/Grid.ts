@@ -94,33 +94,6 @@ export default class Grid {
         return new Grid([...this._grid])
     }
 
-    public solveGrid(): boolean {
-        let found = false
-
-        for (let r = 0; r < 9; r++) {
-            for (let c = 0; c < 9; c++) {
-                const cellCandidates = this.candidates(c, r)
-                if (cellCandidates.size === 1) {
-                    found = true
-                    const [first] = cellCandidates
-                    this.setCell(c, r, first)
-                }
-            }
-        }
-
-        return found
-    }
-
-    public static solve(grid: Grid): void {
-        //while (grid.solveGrid()) {
-        //}
-
-        if (grid.cellRemains()) {
-            console.log('CELL REMAINS !!!!');
-            console.log(grid.getNextLowestCandidateCell());
-        }
-    }
-
     public toString(): string {
         const st = new StringBuilder()
 

@@ -1,10 +1,9 @@
+import Constants from "./Constants";
 import StringBuilder from "./StringBuilder";
 
 type SGrid = number[][];
 
 export default class Grid {
-
-    private static readonly UNITY = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     private readonly _grid: SGrid
 
@@ -27,7 +26,7 @@ export default class Grid {
     public colFixedCandidates(c: number): Set<number> {
         const set = new Set<number>()
 
-        for (let r = 0; r < 9; r++) {
+        for (let r = 0; r < Constants.GRID_HEIGHT; r++) {
             const v = this.getCell(c, r)
             if (v !== 0)
                 set.add(v)
@@ -38,7 +37,7 @@ export default class Grid {
     public rowFixedCandidates(r: number): Set<number> {
         const set = new Set<number>()
 
-        for (let c = 0; c < 9; c++) {
+        for (let c = 0; c < Constants.GRID_WIDTH; c++) {
             const v = this.getCell(c, r)
             if (v !== 0)
                 set.add(v)
@@ -49,11 +48,11 @@ export default class Grid {
     public blockFixedCandidates(c: number, r: number): Set<number> {
         const set = new Set<number>()
 
-        const cellC = Math.ceil(c / 9) * 3
-        const cellR = Math.ceil(r / 9) * 3
+        const cellC = Math.ceil(c / Constants.GRID_WIDTH) * Constants.BLOCK_WIDTH
+        const cellR = Math.ceil(r / Constants.GRID_HEIGHT) * Constants.BLOCK_HEIGHT
 
-        for (let cr = cellR; cr < cellR + 3; cr++) {
-            for (let cc = cellC; cc < cellC + 3; cc++) {
+        for (let cr = cellR; cr < cellR + Constants.BLOCK_HEIGHT; cr++) {
+            for (let cc = cellC; cc < cellC + Constants.BLOCK_WIDTH; cc++) {
                 const v = this.getCell(cc, cr)
                 if (v !== 0)
                     set.add(v)
@@ -76,12 +75,12 @@ export default class Grid {
             return new Set<number>()
 
         const filled = this.cellFixedCandidates(c, r)
-        return new Set<number>(Grid.UNITY.filter(e => !filled.has(e)))
+        return new Set<number>(Constants.UNITY.filter(e => !filled.has(e)))
     }
 
     public isSolved(): boolean {
-        for (let r = 0; r < 9; r++) {
-            for (let c = 0; c < 9; c++) {
+        for (let r = 0; r < Constants.BLOCK_HEIGHT; r++) {
+            for (let c = 0; c < Constants.BLOCK_WIDTH; c++) {
                 if (!this.isCellEmpty(c, r))
                     return false
             }
@@ -98,12 +97,12 @@ export default class Grid {
         const st = new StringBuilder()
 
         st.append('\n')
-        for (let r = 0; r < 9; r++) {
-            if (r > 0 && r % 3 === 0)
+        for (let r = 0; r < Constants.GRID_HEIGHT; r++) {
+            if (r > 0 && r % Constants.BLOCK_HEIGHT === 0)
                 st.append('-----------+-----------+-----------\n')
-            for (let c = 0; c < 9; c++) {
+            for (let c = 0; c < Constants.GRID_WIDTH; c++) {
                 if (c > 0)
-                    st.append(c % 3 === 0 ? '|' : ' ')
+                    st.append(c % Constants.BLOCK_WIDTH === 0 ? '|' : ' ')
                 st.append(' ', this._grid[r][c] === 0 ? '.' : this._grid[r][c].toString(), ' ')
             }
             st.append('\n')
@@ -119,8 +118,8 @@ export default class Grid {
 
         const grid =
             Array.from(
-                { length: 9 },
-                (_, i) => arr.slice(i * 9, i * 9 + 9))
+                { length: Constants.GRID_WIDTH },
+                (_, i) => arr.slice(i * Constants.GRID_WIDTH, i * Constants.GRID_HEIGHT + Constants.GRID_WIDTH))
 
         return new Grid(grid)
     }

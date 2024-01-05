@@ -11,19 +11,23 @@ export default class Grid {
         this._grid = grid
     }
 
-    public getCell(c: number, r: number): number {
+    get grid():SGrid {
+        return this._grid
+    }
+
+    getCell(c: number, r: number): number {
         return this._grid[r][c]
     }
 
-    public setCell(c: number, r: number, v: number): void {
+    setCell(c: number, r: number, v: number): void {
         this._grid[r][c] = v
     }
 
-    public isCellEmpty(c: number, r: number) {
+    isCellEmpty(c: number, r: number) {
         return this._grid[r][c] === 0
     }
 
-    public colFixedCandidates(c: number): Set<number> {
+    colFixedCandidates(c: number): Set<number> {
         const set = new Set<number>()
 
         for (let r = 0; r < Constants.GRID_HEIGHT; r++) {
@@ -34,7 +38,7 @@ export default class Grid {
         return set
     }
 
-    public rowFixedCandidates(r: number): Set<number> {
+    rowFixedCandidates(r: number): Set<number> {
         const set = new Set<number>()
 
         for (let c = 0; c < Constants.GRID_WIDTH; c++) {
@@ -45,7 +49,7 @@ export default class Grid {
         return set
     }
 
-    public blockFixedCandidates(c: number, r: number): Set<number> {
+    blockFixedCandidates(c: number, r: number): Set<number> {
         const set = new Set<number>()
 
         const cellR = Math.floor(r / Constants.BLOCK_HEIGHT) * Constants.BLOCK_HEIGHT
@@ -62,7 +66,7 @@ export default class Grid {
         return set
     }
 
-    public cellFixedCandidates(c: number, r: number): Set<number> {
+    cellFixedCandidates(c: number, r: number): Set<number> {
         return new Set<number>([
             ...this.colFixedCandidates(c),
             ...this.rowFixedCandidates(r),
@@ -70,7 +74,7 @@ export default class Grid {
         ])
     }
 
-    public candidates(c: number, r: number): Set<number> {
+    candidates(c: number, r: number): Set<number> {
         if (!this.isCellEmpty(c, r))
             return new Set<number>()
 
@@ -78,7 +82,7 @@ export default class Grid {
         return new Set<number>(Constants.UNITY.filter(e => !filled.has(e)))
     }
 
-    public isSolved(): boolean {
+    isSolved(): boolean {
         for (let r = 0; r < Constants.BLOCK_HEIGHT; r++) {
             for (let c = 0; c < Constants.BLOCK_WIDTH; c++) {
                 if (!this.isCellEmpty(c, r))
@@ -89,11 +93,11 @@ export default class Grid {
         return true
     }
 
-    public clone() {
+    clone() {
         return new Grid([...this._grid])
     }
 
-    public toString(): string {
+    toString(): string {
         const st = new StringBuilder()
 
         st.append('\n')

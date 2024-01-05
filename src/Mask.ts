@@ -16,6 +16,29 @@ export default class Mask {
         return mask.map((e: any) => Array.isArray(e) ? this.cloneData(e) : e)
     }
 
+    hideRow(r: number) {
+        for (let c = 0; c < Constants.GRID_WIDTH; c++) {
+            this._mask[r][c] = false
+        }
+    }
+
+    hideCol(c: number) {
+        for (let r = 0; r < Constants.GRID_WIDTH; r++) {
+            this._mask[r][c] = false
+        }
+    }
+
+    hideBlock(c: number, r: number) {
+        const cellR = Math.floor(r / Constants.BLOCK_HEIGHT) * Constants.BLOCK_HEIGHT
+        const cellC = Math.floor(c / Constants.BLOCK_WIDTH) * Constants.BLOCK_WIDTH
+
+        for (let cr = cellR; cr < cellR + Constants.BLOCK_HEIGHT; cr++) {
+            for (let cc = cellC; cc < cellC + Constants.BLOCK_WIDTH; cc++) {
+                this._mask[cr][cc] = false
+            }
+        }
+    }
+
     clone(): Mask {
         return new Mask(Mask.cloneData(this._mask))
     }

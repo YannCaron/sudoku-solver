@@ -48,8 +48,8 @@ export default class Grid {
     public blockFixedCandidates(c: number, r: number): Set<number> {
         const set = new Set<number>()
 
-        const cellC = Math.ceil(c / Constants.GRID_WIDTH) * Constants.BLOCK_WIDTH
-        const cellR = Math.ceil(r / Constants.GRID_HEIGHT) * Constants.BLOCK_HEIGHT
+        const cellR = Math.floor(r / Constants.BLOCK_HEIGHT) * Constants.BLOCK_HEIGHT
+        const cellC = Math.floor(c / Constants.BLOCK_WIDTH) * Constants.BLOCK_WIDTH
 
         for (let cr = cellR; cr < cellR + Constants.BLOCK_HEIGHT; cr++) {
             for (let cc = cellC; cc < cellC + Constants.BLOCK_WIDTH; cc++) {

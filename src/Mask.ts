@@ -2,6 +2,7 @@ import Constants from "./Constants";
 import Grid from "./Grid";
 import StringBuilder from "./StringBuilder";
 
+type Coord = { r: number, c: number }
 type SMask = boolean[][];
 
 export default class Mask {
@@ -16,16 +17,34 @@ export default class Mask {
         return mask.map((e: any) => Array.isArray(e) ? this.cloneData(e) : e)
     }
 
+    hideCell(c: number, r: number) {
+        this._mask[r][c] = false
+    }
+
+    unhideCell(c: number, r: number) {
+        this._mask[r][c] = true
+    }
+
     hideRow(r: number) {
         for (let c = 0; c < Constants.GRID_WIDTH; c++) {
-            this._mask[r][c] = false
+            this.hideCell(c, r)
         }
+    }
+
+    hideRowExcept(r: number, coords: Coord[]) {
+        this.hideRow(r)
+        coords.forEach(({r, c}) => this.unhideCell(r, c))
     }
 
     hideCol(c: number) {
         for (let r = 0; r < Constants.GRID_WIDTH; r++) {
-            this._mask[r][c] = false
+            this.hideCell(c, r)
         }
+    }
+
+    hideColExcept(c: number, coords: Coord[]) {
+        this.hideCol(c)
+        coords.forEach(({r, c}) => this.unhideCell(r, c))
     }
 
     hideBlock(c: number, r: number) {
@@ -34,9 +53,26 @@ export default class Mask {
 
         for (let cr = cellR; cr < cellR + Constants.BLOCK_HEIGHT; cr++) {
             for (let cc = cellC; cc < cellC + Constants.BLOCK_WIDTH; cc++) {
-                this._mask[cr][cc] = false
+                this.hideCell(cc, cr)
             }
         }
+    }
+
+    analyseBlock(bc: number, br: number): Coord[] {
+        const cellR = br * Constants.BLOCK_HEIGHT
+        const cellC = bc * Constants.BLOCK_WIDTH
+
+        const freeCells = []
+
+        for (let cr = cellR; cr < cellR + Constants.BLOCK_HEIGHT; cr++) {
+            for (let cc = cellC; cc < cellC + Constants.BLOCK_WIDTH; cc++) {
+                if (this._mask[cr][cc]) {
+                    freeCells.push({ r: cr, c: cc })
+                }
+            }
+        }
+
+        return freeCells
     }
 
     clone(): Mask {

@@ -6,9 +6,9 @@ export default class GridIterator {
     private _y: number
     private _visitedCounted: number
 
-    constructor() {
-        this._x = 0
-        this._y = 0
+    constructor(x:number = 0, y: number = 0) {
+        this._x = x
+        this._y = y
         this._visitedCounted = 0
     }
 
@@ -16,7 +16,9 @@ export default class GridIterator {
         return this._visitedCounted == Constants.GRID_WIDTH * Constants.GRID_HEIGHT
     }
 
-    next() {
+    next(): [x:number, y:number] {
+        const coord = [this._x, this._y] as [x:number, y:number]
+
         this._x ++
         if (this._x == Constants.GRID_WIDTH) {
             this._x = 0
@@ -27,7 +29,7 @@ export default class GridIterator {
 
         this._visitedCounted ++
 
-        return [this._x, this._y]
+        return coord
     }
 
     resetStartPoint() {

@@ -42,7 +42,7 @@ do {
                     mask?.hideRow(r)
                     mask?.hideCol(c)
                     for (const otherMask of numberMasks.values()) {
-                        otherMask.hideCell(c, r) 
+                        otherMask.hideCell(c, r)
                     }
                     grid.setCell(c, r, e)
                     found = true
@@ -59,8 +59,8 @@ do {
                         }
 
                     }
-                    //if (lr && lr != -1) mask?.hideRowExcept(lr, coords || [])
-                    //if (lc && lc != -1) mask?.hideColExcept(lc, coords || [])
+                    if (lr && lr != -1) mask?.hideRowExcept(lr, coords ?? [])
+                    if (lc && lc != -1) mask?.hideColExcept(lc, coords ?? [])
                     
                 }
             }

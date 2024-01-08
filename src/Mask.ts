@@ -21,10 +21,6 @@ export default class Mask {
         this._mask[r][c] = false
     }
 
-    unhideCell(c: number, r: number) {
-        this._mask[r][c] = true
-    }
-
     hideRow(r: number) {
         for (let c = 0; c < Constants.GRID_WIDTH; c++) {
             this.hideCell(c, r)
@@ -32,8 +28,11 @@ export default class Mask {
     }
 
     hideRowExcept(r: number, coords: Coord[]) {
+        const backup = coords.map(({r, c}) => { return {r: r, c: c, v: this._mask[r][c]} })
+
         this.hideRow(r)
-        coords.forEach(({r, c}) => this.unhideCell(r, c))
+
+        backup.forEach(({r, c, v}) => this._mask[r][c] = v)
     }
 
     hideCol(c: number) {
@@ -43,8 +42,11 @@ export default class Mask {
     }
 
     hideColExcept(c: number, coords: Coord[]) {
+        const backup = coords.map(({r, c}) => { return {r: r, c: c, v: this._mask[r][c]} })
+
         this.hideCol(c)
-        coords.forEach(({r, c}) => this.unhideCell(r, c))
+
+        backup.forEach(({r, c, v}) => this._mask[r][c] = v)
     }
 
     hideBlock(c: number, r: number) {

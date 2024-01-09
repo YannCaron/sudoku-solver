@@ -77,6 +77,24 @@ export default class Mask {
         return freeCells
     }
 
+    remainsOnRow(r: number): Coord[] {
+        const remains = new Array<Coord>()
+
+        for (let c = 0; c < Constants.GRID_WIDTH; c++) {
+            if (!this._mask[r][c]) remains.push({ c: c, r: r })
+        }
+        return remains
+    }
+
+    remainsOnCol(c: number): Coord[] {
+        const remains = new Array<Coord>()
+
+        for (let r = 0; r < Constants.GRID_HEIGHT; r++) {
+            if (this._mask[r][c]) remains.push({ c: c, r: r })
+        }
+        return remains
+    }
+
     clone(): Mask {
         return new Mask(Mask.cloneData(this._mask))
     }

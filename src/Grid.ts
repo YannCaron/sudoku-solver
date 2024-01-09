@@ -79,7 +79,7 @@ export default class Grid {
             return new Set<number>()
 
         const filled = this.cellFixedCandidates(c, r)
-        return new Set<number>(Constants.UNITY.filter(e => !filled.has(e)))
+        return new Set<number>(Constants.ALPHABET.filter(e => !filled.has(e)))
     }
 
     isSolved(): boolean {

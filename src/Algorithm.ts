@@ -1,6 +1,4 @@
-import Constants from "./Constants";
 import Grid from "./Grid";
-import Mask from "./Mask";
 
 export default abstract class Algorithm {
 

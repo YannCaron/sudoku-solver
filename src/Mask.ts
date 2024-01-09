@@ -2,7 +2,7 @@ import Constants from "./Constants";
 import Grid from "./Grid";
 import StringBuilder from "./StringBuilder";
 
-type Coord = { r: number, c: number }
+export type Coord = { c: number, r: number }
 type SMask = boolean[][];
 
 export default class Mask {
@@ -28,11 +28,11 @@ export default class Mask {
     }
 
     hideRowExcept(r: number, coords: Coord[]) {
-        const backup = coords.map(({r, c}) => { return {r: r, c: c, v: this._mask[r][c]} })
+        const backup = coords.map(({ c, r }) => { return { c: c, r: r, v: this._mask[r][c] } })
 
         this.hideRow(r)
 
-        backup.forEach(({r, c, v}) => this._mask[r][c] = v)
+        backup.forEach(({ c, r, v }) => this._mask[r][c] = v)
     }
 
     hideCol(c: number) {
@@ -42,11 +42,11 @@ export default class Mask {
     }
 
     hideColExcept(c: number, coords: Coord[]) {
-        const backup = coords.map(({r, c}) => { return {r: r, c: c, v: this._mask[r][c]} })
+        const backup = coords.map(({ c, r }) => { return { c: c, r: r, v: this._mask[r][c] } })
 
         this.hideCol(c)
 
-        backup.forEach(({r, c, v}) => this._mask[r][c] = v)
+        backup.forEach(({ c, r, v }) => this._mask[r][c] = v)
     }
 
     hideBlock(c: number, r: number) {

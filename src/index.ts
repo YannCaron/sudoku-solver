@@ -1,12 +1,15 @@
 import Grid from "./Grid";
 import MaskingAlgorithm from "./MaskingAlgorithm";
-import { easyGrids } from "./grids";
+import { easyGrids, hardGrids, normalGrids } from "./grids";
 
-const grid = Grid.fromString(easyGrids[0])
+const grid = Grid.fromString(normalGrids[1])
 const algo = new MaskingAlgorithm(grid)
+
+algo.debugGrid();
 
 algo.analyze();
 
-algo.debugMasks();
+//algo.debugMasks();
+algo.debugCandidates();
 algo.debugGrid();
 algo.debugProcess();

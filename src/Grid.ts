@@ -98,21 +98,21 @@ export default class Grid {
     }
 
     toString(): string {
-        const st = new StringBuilder()
+        const sb = new StringBuilder()
 
-        st.append('\n')
+        sb.append('\n')
         for (let r = 0; r < Constants.GRID_HEIGHT; r++) {
             if (r > 0 && r % Constants.BLOCK_HEIGHT === 0)
-                st.append('-----------+-----------+-----------\n')
+                sb.append('-----------+-----------+-----------\n')
             for (let c = 0; c < Constants.GRID_WIDTH; c++) {
                 if (c > 0)
-                    st.append(c % Constants.BLOCK_WIDTH === 0 ? '|' : ' ')
-                st.append(' ', this._grid[r][c] === 0 ? '.' : this._grid[r][c].toString(), ' ')
+                    sb.append(c % Constants.BLOCK_WIDTH === 0 ? '|' : ' ')
+                sb.append(' ', this._grid[r][c] === 0 ? '.' : this._grid[r][c].toString(), ' ')
             }
-            st.append('\n')
+            sb.append('\n')
         }
 
-        return st.toString()
+        return sb.toString()
     }
 
     static fromString(str: string): Grid {
